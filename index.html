@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="logo.png" rel="icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merienda:wght@900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #FFE8D6;
+            color: #674736;
+            font-family: 'Josefin Sans';
+            padding: 20px;
+        }
+
+        a {
+            color: #674736;
+            text-decoration: none;
+        }
+
+        .timer-container {
+            text-align: center;
+        }
+
+        #timer {
+            font-size: 3em;
+            margin: 20px;
+        }
+
+        #startButton {
+            padding: 10px;
+            font-size: 1em;
+            border-radius: 50px;
+            background: none;
+            border: none;
+            color: #674736;
+        }
+
+        img {
+            height: 45px;
+            width: 45px;
+        }
+
+        audio {
+            display: none;
+        }
+        .heading {
+          font-family: 'Merienda';
+        }
+    </style>
+    <title>COFFEE</title>
+</head>
+<body>
+    <div class="timer-container">
+      <div align="middle">
+      <p class="heading"><font size="7"><b>COFFEE</b></font>&nbsp;&nbsp;&nbsp;&nbsp;<img src="logo.png"></p><br><br>
+    </div>
+        <div id="timer"><font size="8">25:00</font></div>
+        <button id="startButton" onclick="toggleTimer()"><font size="6">▶</font></button><br><br>
+        <a href="https://instagram.com/pixieai.ofcl"><p><i>-by Pixie</i></i></a>
+        <audio id="backgroundMusic" src="music.mp3" loop></audio>
+
+    </div>
+    <script>
+        let timer;
+        let minutes = 25;
+        let seconds = 0;
+        let isTimerRunning = false;
+
+        function toggleTimer() {
+            if (isTimerRunning) {
+                clearInterval(timer);
+                isTimerRunning = false;
+                document.getElementById("startButton").innerHTML = '<font size="6">▶</font>';
+                document.getElementById("backgroundMusic").pause();
+            } else {
+                isTimerRunning = true;
+                document.getElementById("backgroundMusic").play();
+                timer = setInterval(function () {
+                    if (minutes === 0 && seconds === 0) {
+                        clearInterval(timer);
+                        isTimerRunning = false;
+                        document.getElementById("timer").textContent = "25:00";
+                        document.getElementById("startButton").innerHTML = '<font size="6">▶</font>';
+                        document.getElementById("backgroundMusic").pause();
+                    } else {
+                        updateTimerDisplay(minutes, seconds);
+                        if (seconds === 0) {
+                            minutes--;
+                            seconds = 59;
+                        } else {
+                            seconds--;
+                        }
+                    }
+                }, 1000);
+                document.getElementById("startButton").innerHTML = '<font size="4">▐▐</font>';
+            }
+        }
+
+        function updateTimerDisplay(minutes, seconds) {
+            document.getElementById("timer").textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+    </script>
+</body>
+</html>
